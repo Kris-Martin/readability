@@ -32,47 +32,28 @@ public class Main {
     private static void getSelection(String selection, Text text) {
         switch (selection) {
             case "ARI" -> {
-                double score = Indexes.getARI(text);
-                int age = Indexes.getUpperAgeLevel(score);
-                printOutput(Indexes.ARI.name(), score, age);
+                Indexes.ARI.printOutput(text);
             }
             case "FK" -> {
-                double score = Indexes.getFleschKincaid(text);
-                int age = Indexes.getUpperAgeLevel(score);
-                printOutput("Flesch–Kincaid readability tests", score, age);
+                Indexes.FK.printOutput(text);
             }
             case "SMOG" -> {
-                double score = Indexes.getSMOG(text);
-                int age = Indexes.getUpperAgeLevel(score);
-               printOutput("Simple Measure of Gobbledygook", score, age);
+                Indexes.SMOG.printOutput(text);
             }
             case "CL" -> {
-                double score = Indexes.getColemanLiau(text);
-                int age = Indexes.getUpperAgeLevel(score);
-                printOutput("Coleman–Liau index", score, age);
+                Indexes.CL.printOutput(text);
             }
             case "ALL" -> {
-                Map<String, Double> indexes = Map.of(
-                        Indexes.ARI.getName(), Indexes.getARI(text),
-                        Indexes.FK.getName(), Indexes.getFleschKincaid(text),
-                        Indexes.SMOG.getName(), Indexes.getSMOG(text),
-                        Indexes.CL.getName(), Indexes.getColemanLiau(text));
-
                 List<Integer> ageLevels = new ArrayList<>();
-                indexes.forEach((name, score) -> {
-                    int age = Indexes.getUpperAgeLevel(score);
-                    ageLevels.add(age);
-                    printOutput(name, score, age);
-                });
+                for (Indexes index : Indexes.values()) {
+                    ageLevels.add(index.getUpperAgeLevel(text));
+                    index.printOutput(text);
+                }
 
                 System.out.printf("%nThis text should be understood in average by %.2f-year-olds.%n",
                         Indexes.getAverageAgeLevel(ageLevels));
             }
             default -> System.out.println("Error! Invalid selection. Please try again.");
         }
-    }
-
-    public static void printOutput(String name, double score, int age) {
-        System.out.printf("%s: %.2f (about %d-year-olds).%n",  name, score, age);
     }
 }
