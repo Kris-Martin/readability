@@ -12,7 +12,14 @@ public record Readability(Text text) {
     }
 
     public double getSMOG() {
-        return 1.043 * Math.sqrt(text().getPolySyllables() * (30.0 / text.getSentenceCount())) + 3.1291;
+        return 1.043 * Math.sqrt(text.getPolySyllables() * (30.0 / text.getSentenceCount())) + 3.1291;
+    }
+
+    public double getColemanLiau() {
+        double avgChars100Words = (double) text.getCharCount() / text.getWordCount() * 100;
+        double avgSentences100Words = (double) text.getSentenceCount() / text.getWordCount() * 100;
+
+        return 0.0588 * avgChars100Words - 0.296 * avgSentences100Words - 15.8;
     }
 
     public String getAgeRange(double score) {

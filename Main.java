@@ -35,11 +35,12 @@ public class Main {
                     Automated Readability Index: %.2f
                     Flesch–Kincaid readability tests: %.2f
                     Simple Measure of Gobbledygook: %.2f
-                    Coleman–Liau index:
+                    Coleman–Liau index: %.2f
                     """.formatted(
                             readability.getARI(),
                             readability.getFleschKincaid(),
-                            readability.getSMOG());
+                            readability.getSMOG(),
+                            readability.getColemanLiau());
             System.out.println(readabilityScores);
 
         } catch (FileNotFoundException e) {
