@@ -11,6 +11,10 @@ public record Readability(Text text) {
                11.8 * ((double) text.getTotalSyllables() / text.getWordCount()) - 15.59;
     }
 
+    public double getSMOG() {
+        return 1.043 * Math.sqrt(text().getPolySyllables() * (30.0 / text.getSentenceCount())) + 3.1291;
+    }
+
     public String getAgeRange(double score) {
         int rank = (int) Math.ceil(score);
         int lowerAge = rank + 4;
