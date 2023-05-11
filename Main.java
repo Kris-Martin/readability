@@ -2,6 +2,7 @@ package readability;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -9,31 +10,33 @@ public class Main {
     public static void main(String[] args) {
 
         // args[0] for command line, "~/test1.txt" for test
-        try (Scanner scanner = new Scanner(new File(args[0]))) {
+        try (Scanner scanner = new Scanner(new File("/Users/kristymartin/test1.txt"))) {
             String input = scanner.nextLine().trim();
             Text text = new Text(input);
             Readability readability = new Readability(text);
-            double ariScore = readability.getARI();
 
-            String output =
+            String textStats =
                     """
-                    The text is:
-                    %s
-                                        
-                    Words: %d
+                    Words: %s
+                    Word count: %d
                     Sentences: %d
-                    Characters: %d
-                    The score is: %f
-                    This text should be understood by %s year-olds.
+                    Syllable count: %d
+                    Polysyllables: //TODO
                     """.formatted(
-                            text.input(),
-                            text.wordCount(),
-                            text.sentenceCount(),
-                            text.charCount(),
-                            ariScore,
-                            readability.getAgeRange(ariScore));
+                            Arrays.toString(text.getWords()),
+                            text.getWordCount(),
+                            text.getSentenceCount(),
+                            text.getTotalSyllables());
+            System.out.println(textStats);
 
-            System.out.println(output);
+            String readabilityScores =
+                    """
+                    Automated Readability Index: %.2f
+                    Flesch–Kincaid readability tests: %.2f
+                    Simple Measure of Gobbledygook:
+                    Coleman–Liau index:
+                    """.formatted(readability.getARI(), readability.getFleschKincaid());
+            System.out.println(readabilityScores);
 
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
