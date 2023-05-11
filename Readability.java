@@ -1,5 +1,7 @@
 package readability;
 
+import java.util.Arrays;
+
 public record Readability(Text text) {
     public double getARI() {
         return 4.71 * ((double) text.getCharCount() / text.getWordCount()) +
@@ -22,10 +24,13 @@ public record Readability(Text text) {
         return 0.0588 * avgChars100Words - 0.296 * avgSentences100Words - 15.8;
     }
 
-    public String getAgeRange(double score) {
+    public static int getUpperAgeLevel(double score) {
         int rank = (int) Math.ceil(score);
         int lowerAge = rank + 4;
-        int upperAge = lowerAge != 18 ? lowerAge + 1 : 24;
-        return "%s-%s".formatted(lowerAge, upperAge);
+        return lowerAge != 18 ? lowerAge + 1 : 24;
+    }
+
+    public static double getAverageAgeLevel(double... scores) {
+        return Arrays.stream(scores).average().orElse(0);
     }
 }

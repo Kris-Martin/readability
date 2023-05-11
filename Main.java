@@ -30,17 +30,33 @@ public class Main {
                             text.getPolySyllables());
             System.out.println(textStats);
 
+            double ari = readability.getARI();
+            int ariAgeLevel = Readability.getUpperAgeLevel(ari);
+            double fleshKincaid = readability.getFleschKincaid();
+            int fleshKincaidAgeLevel = Readability.getUpperAgeLevel(fleshKincaid);
+            double smog = readability.getSMOG();
+            int smogAgeLevel = Readability.getUpperAgeLevel(smog);
+            double colemanLiau = readability.getColemanLiau();
+            int colemanLiauAgeLevel = Readability.getUpperAgeLevel(colemanLiau);
+
             String readabilityScores =
                     """
-                    Automated Readability Index: %.2f
-                    Flesch–Kincaid readability tests: %.2f
-                    Simple Measure of Gobbledygook: %.2f
-                    Coleman–Liau index: %.2f
+                    Automated Readability Index: %.2f (about %d-year-olds).
+                    Flesch–Kincaid readability tests: %.2f (about %d-year-olds).
+                    Simple Measure of Gobbledygook: %.2f (about %d-year-olds).
+                    Coleman–Liau index: %.2f (about %d-years-old).
+                    
+                    This text should be understood in average by %.2f-year-olds.
                     """.formatted(
-                            readability.getARI(),
-                            readability.getFleschKincaid(),
-                            readability.getSMOG(),
-                            readability.getColemanLiau());
+                            ari,
+                            ariAgeLevel,
+                            fleshKincaid,
+                            fleshKincaidAgeLevel,
+                            smog,
+                            smogAgeLevel,
+                            colemanLiau,
+                            colemanLiauAgeLevel,
+                            Readability.getAverageAgeLevel(ariAgeLevel, fleshKincaidAgeLevel, smogAgeLevel, colemanLiauAgeLevel));
             System.out.println(readabilityScores);
 
         } catch (FileNotFoundException e) {
