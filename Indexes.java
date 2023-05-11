@@ -41,14 +41,6 @@ public enum Indexes {
         this.name = name;
     }
 
-    public String getAbbrev() {
-        return abbrev;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public abstract double getScore(Text text);
 
     public void printOutput(Text text) {

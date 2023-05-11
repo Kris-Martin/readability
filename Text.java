@@ -24,13 +24,13 @@ public class Text {
         polySyllables = syllableCountsArray.stream().filter(c -> c > 2).count();
     }
 
-    public static boolean isVowel(char c) {
+    private static boolean isVowel(char c) {
         final String vowels = "aeiouy";
         c = Character.toLowerCase(c);
         return vowels.contains(String.valueOf(c));
     }
 
-    public static int getSyllablesPerWord(String word) {
+    private static int getSyllablesPerWord(String word) {
         char prev = ' ';
         char curr;
         int count = 0;
@@ -103,7 +103,7 @@ public class Text {
                 Words: %d
                 Sentences: %d
                 Characters: %d
-                Syllable count: %d
+                Syllables: %d
                 Polysyllables: %d
                 """.formatted(input, wordCount, sentenceCount, charCount, totalSyllables, polySyllables);
     }

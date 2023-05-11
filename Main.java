@@ -8,7 +8,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         // args[0] for command line, "~/test1.txt" for test
-        try (Scanner scanner = new Scanner(new File("/Users/kristymartin/test1.txt"))) {
+        try (Scanner scanner = new Scanner(new File(args[0]))) {
             String input = scanner.nextLine().trim();
             Text text = new Text(input);
             System.out.println(text.getStats());
@@ -31,18 +31,10 @@ public class Main {
 
     private static void getSelection(String selection, Text text) {
         switch (selection) {
-            case "ARI" -> {
-                Indexes.ARI.printOutput(text);
-            }
-            case "FK" -> {
-                Indexes.FK.printOutput(text);
-            }
-            case "SMOG" -> {
-                Indexes.SMOG.printOutput(text);
-            }
-            case "CL" -> {
-                Indexes.CL.printOutput(text);
-            }
+            case "ARI" -> Indexes.ARI.printOutput(text);
+            case "FK" -> Indexes.FK.printOutput(text);
+            case "SMOG" -> Indexes.SMOG.printOutput(text);
+            case "CL" -> Indexes.CL.printOutput(text);
             case "ALL" -> {
                 List<Integer> ageLevels = new ArrayList<>();
                 for (Indexes index : Indexes.values()) {
