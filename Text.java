@@ -75,10 +75,6 @@ public class Text {
         return input.split("[!?.]").length;
     }
 
-    public String getInput() {
-        return input;
-    }
-
     public int getSentenceCount() {
         return sentenceCount;
     }
@@ -97,5 +93,18 @@ public class Text {
 
     public int getWordCount() {
         return wordCount;
+    }
+
+    public String getStats() {
+        return """
+                The text is:
+                %s
+                
+                Words: %d
+                Sentences: %d
+                Characters: %d
+                Syllable count: %d
+                Polysyllables: %d
+                """.formatted(input, wordCount, sentenceCount, charCount, totalSyllables, polySyllables);
     }
 }
