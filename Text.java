@@ -1,21 +1,27 @@
 package readability;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Text {
-    String input;
-    String[] words;
-    private final int sentenceCount;
     private final int charCount;
-    private final int totalSyllables;
     private final int wordCount;
+    private final int sentenceCount;
+    private final int totalSyllables;
+    private final long polySyllables;
+    private final String input;
+    private final String[] words;
 
     public Text(String input) {
         this.input = input;
         words = setWords();
         sentenceCount = setSentenceCount();
         charCount = setCharCount();
-        totalSyllables = setTotalSyllables();
         wordCount = setWordCount();
+        List<Integer> syllableCountsArray = setSyllableCountArray();
+        totalSyllables = syllableCountsArray.stream().reduce(0, Integer::sum);
+        polySyllables = syllableCountsArray.stream().filter(c -> c > 2).count();
     }
 
     public static boolean isVowel(char c) {
@@ -24,7 +30,7 @@ public class Text {
         return vowels.contains(String.valueOf(c));
     }
 
-    public static int syllablesPerWord(String word) {
+    public static int getSyllablesPerWord(String word) {
         char prev = ' ';
         char curr;
         int count = 0;
@@ -45,12 +51,12 @@ public class Text {
         return input.replaceAll("\\s+", "").length();
     }
 
-    private int setTotalSyllables() {
-        int count = 0;
+    private List<Integer> setSyllableCountArray() {
+        List<Integer> syllableCounts = new ArrayList<>();
         for (String word : this.getWords()) {
-            count += syllablesPerWord(word);
+            syllableCounts.add(getSyllablesPerWord(word));
         }
-        return count;
+        return syllableCounts;
     }
 
     private String[] setWords() {
@@ -83,6 +89,10 @@ public class Text {
 
     public int getTotalSyllables() {
         return totalSyllables;
+    }
+
+    public long getPolySyllables() {
+        return polySyllables;
     }
 
     public int getWordCount() {

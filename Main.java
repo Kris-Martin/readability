@@ -21,12 +21,13 @@ public class Main {
                     Word count: %d
                     Sentences: %d
                     Syllable count: %d
-                    Polysyllables: //TODO
+                    Polysyllables: %d
                     """.formatted(
                             Arrays.toString(text.getWords()),
                             text.getWordCount(),
                             text.getSentenceCount(),
-                            text.getTotalSyllables());
+                            text.getTotalSyllables(),
+                            text.getPolySyllables());
             System.out.println(textStats);
 
             String readabilityScores =
